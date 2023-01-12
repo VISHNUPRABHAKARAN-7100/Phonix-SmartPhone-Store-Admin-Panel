@@ -7,17 +7,27 @@ import 'package:image_picker/image_picker.dart';
 
 class AddProductProvider with ChangeNotifier {
   File? image;
+  final ImagePicker imagePicker = ImagePicker();
+  List<XFile>? imageFileList = [];
   // Function to add images to the product details.
 
   addImage() async {
     try {
-      var image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      this.image = imageTemp;
-      notifyListeners();
+      if (imageFileList == null) return;
+      final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+      if (selectedImages.isNotEmpty) {
+        imageFileList!.addAll(selectedImages);
+        notifyListeners();
+      }
     } on PlatformException catch (e) {
       log('Failed to pick : $e.tostring');
     }
+  }
+
+  // Function to add products to the database.
+
+  addProduct() async {
+    imageFileList?.clear();
+    notifyListeners();
   }
 }

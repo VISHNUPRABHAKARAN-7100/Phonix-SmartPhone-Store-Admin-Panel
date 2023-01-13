@@ -29,132 +29,167 @@ class _AddProductState extends State<AddProduct> {
         padding: EdgeInsets.symmetric(horizontal: size.width * .03),
         child: ListView(
           children: [
-            Form(
-              child: Column(
-                children: [
-                  // Textformfield for the name of the product.
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
+            Consumer<AddProductProvider>(
+              builder: (context, addProductProviderValue, child) => Form(
+                child: Column(
+                  children: [
+                    // Textformfield for the name of the product.
+                    TextFormField(
+                      controller: addProductProviderValue
+                          .productNameTextEditingController,
+                      decoration: InputDecoration(
+                        labelStyle: const TextStyle(
                           color: Colors.black,
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        labelText: 'Product Name',
+                        focusColor: Colors.black,
+                        border: const OutlineInputBorder(),
                       ),
-                      labelText: 'Product Name',
-                      focusColor: Colors.black,
-                      border: const OutlineInputBorder(),
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * .02,
-                  ),
-                  // Textformfield for the actual price of the product.
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
+                    SizedBox(
+                      height: size.height * .02,
+                    ),
+                    TextFormField(
+                      controller: addProductProviderValue
+                          .descriptionTextEditingController,
+                      decoration: InputDecoration(
+                        labelStyle: const TextStyle(
                           color: Colors.black,
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        labelText: 'Description',
+                        focusColor: Colors.black,
+                        border: const OutlineInputBorder(),
                       ),
-                      labelText: 'Actual Price',
-                      focusColor: Colors.black,
-                      border: const OutlineInputBorder(),
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * .02,
-                  ),
-                  // Textformfield for the price of the product.
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
+                    SizedBox(
+                      height: size.height * .02,
+                    ),
+                    // Textformfield for the actual price of the product.
+                    TextFormField(
+                      controller: addProductProviderValue
+                          .actualPriceTextEditingController,
+                      decoration: InputDecoration(
+                        labelStyle: const TextStyle(
                           color: Colors.black,
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        labelText: 'Actual Price',
+                        focusColor: Colors.black,
+                        border: const OutlineInputBorder(),
                       ),
-                      labelText: 'Discounted Price',
-                      focusColor: Colors.black,
-                      border: const OutlineInputBorder(),
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * .02,
-                  ),
-                  // Textformfield for the brand of the product.
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
+                    SizedBox(
+                      height: size.height * .02,
+                    ),
+                    // Textformfield for the price of the product.
+                    TextFormField(
+                      controller: addProductProviderValue
+                          .discountedPriceTextEditingController,
+                      decoration: InputDecoration(
+                        labelStyle: const TextStyle(
                           color: Colors.black,
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        labelText: 'Discounted Price',
+                        focusColor: Colors.black,
+                        border: const OutlineInputBorder(),
                       ),
-                      labelText: 'Brand',
-                      focusColor: Colors.black,
-                      border: const OutlineInputBorder(),
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * .02,
-                  ),
-                  // Textformfield for category of the product.
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
+                    SizedBox(
+                      height: size.height * .02,
+                    ),
+                    // Textformfield for the brand of the product.
+                    TextFormField(
+                      controller:
+                          addProductProviderValue.brandTextEditingController,
+                      decoration: InputDecoration(
+                        labelStyle: const TextStyle(
                           color: Colors.black,
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        labelText: 'Brand',
+                        focusColor: Colors.black,
+                        border: const OutlineInputBorder(),
                       ),
-                      labelText: 'Category',
-                      focusColor: Colors.black,
-                      border: const OutlineInputBorder(),
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * .02,
-                  ),
-                  // Textformfield for the remaining stock of the product.
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
+                    SizedBox(
+                      height: size.height * .02,
+                    ),
+
+                    // Textformfield for category of the product.
+                    TextFormField(
+                      controller:
+                          addProductProviderValue.categoryTextEditingController,
+                      decoration: InputDecoration(
+                        labelStyle: const TextStyle(
                           color: Colors.black,
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        labelText: 'Category',
+                        focusColor: Colors.black,
+                        border: const OutlineInputBorder(),
                       ),
-                      labelText: 'Remaining Stock',
-                      focusColor: Colors.black,
-                      border: const OutlineInputBorder(),
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * .02,
-                  ),
-                  Consumer<AddProductProvider>(
-                    builder: (context, addProductProviderValue, child) =>
-                        Column(
+                    SizedBox(
+                      height: size.height * .02,
+                    ),
+                    // Textformfield for the remaining stock of the product.
+                    TextFormField(
+                      controller: addProductProviderValue
+                          .remainigStockTextEditingController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelStyle: const TextStyle(
+                          color: Colors.black,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                          ),
+                        ),
+                        labelText: 'Remaining Stock',
+                        focusColor: Colors.black,
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.height * .02,
+                    ),
+
+                    Column(
                       children: [
                         IconButton(
                           onPressed: () async {
@@ -198,9 +233,9 @@ class _AddProductState extends State<AddProduct> {
                           child: const Text('Add Product'),
                         )
                       ],
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             )
           ],

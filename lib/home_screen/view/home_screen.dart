@@ -29,30 +29,45 @@ class HomeScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               return Row(
                 children: [
-                  Container(
-                    color: Colors.amber,
+                  SizedBox(
                     height: 200,
                     width: size.width,
                     child: Row(
                       children: [
                         Image(
-                            fit: BoxFit.cover,
-                            height: size.width / 2,
-                            width: 100,
-                            image: const NetworkImage(
-                                'https://miro.medium.com/max/828/1*b68GAv4PcrJzZAq5Oh9RJA.webp')),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            Text('Name of the product'),
-                            Text('Name of the product'),
-                            Text('Name of the product'),
-                            Text('Name of the product'),
-                          ],
+                          // fit: BoxFit.cover,
+                          height: size.width * .5,
+                          width: 100,
+                          image: const NetworkImage(
+                            'https://m.media-amazon.com/images/I/61ahn9N38zL._SX679_.jpg',
+                          ),
                         ),
+                        SizedBox(
+                          width: size.width * .02,
+                        ),
+                        SizedBox(
+                          width: size.width * .45,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              Text('Name of the product', maxLines: 1),
+                              Text('Description of the product', maxLines: 1),
+                              Text('price of the product', maxLines: 1),
+                              Text('Stock of the product', maxLines: 1),
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.delete),
+                          ),
+                        )
                       ],
                     ),
-                  )
+                  ),
                 ],
               );
             },
@@ -62,21 +77,20 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.home),
-            ),
-            IconButton(
-              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const AddProduct(),
-              )),
-              icon: const Icon(Icons.add),
-            )
-          ],
+      floatingActionButton: Container(
+        width: size.width / 3,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: IconButton(
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const AddProduct(),
+          )),
+          icon: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       ),
     );

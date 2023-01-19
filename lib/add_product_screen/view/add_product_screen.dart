@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:admin_panel_of_phonix/add_product_screen/controller/add_product_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 /// This screen is for adding the product.
@@ -33,6 +34,9 @@ class _AddProductState extends State<AddProduct> {
               builder: (context, addProductProviderValue, child) => Form(
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: size.height * .02,
+                    ),
                     // Textformfield for the name of the product.
                     TextFormField(
                       controller: addProductProviderValue
@@ -78,8 +82,12 @@ class _AddProductState extends State<AddProduct> {
                     ),
                     // Textformfield for the actual price of the product.
                     TextFormField(
-                      controller: addProductProviderValue
-                          .actualPriceTextEditingController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      controller:
+                          addProductProviderValue.mrpTextEditingController,
                       decoration: InputDecoration(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -100,8 +108,12 @@ class _AddProductState extends State<AddProduct> {
                     ),
                     // Textformfield for the price of the product.
                     TextFormField(
-                      controller: addProductProviderValue
-                          .discountedPriceTextEditingController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      controller:
+                          addProductProviderValue.priceTextEditingController,
                       decoration: InputDecoration(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -167,9 +179,12 @@ class _AddProductState extends State<AddProduct> {
                     ),
                     // Textformfield for the remaining stock of the product.
                     TextFormField(
-                      controller: addProductProviderValue
-                          .remainigStockTextEditingController,
                       keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      controller:
+                          addProductProviderValue.stockTextEditingController,
                       decoration: InputDecoration(
                         labelStyle: const TextStyle(
                           color: Colors.black,
@@ -228,7 +243,23 @@ class _AddProductState extends State<AddProduct> {
                             backgroundColor: Colors.black,
                           ),
                           onPressed: () {
-                            addProductProviderValue.addProduct();
+                            addProductProviderValue.addProduct(
+                              addProductProviderValue
+                                  .productNameTextEditingController.text,
+                              addProductProviderValue
+                                  .descriptionTextEditingController.text,
+                              int.parse(addProductProviderValue
+                                  .priceTextEditingController.text),
+                              int.parse(addProductProviderValue
+                                  .mrpTextEditingController.text),
+                              addProductProviderValue
+                                  .brandTextEditingController.text,
+                              addProductProviderValue
+                                  .categoryTextEditingController.text,
+                              int.parse(addProductProviderValue
+                                  .stockTextEditingController.text),
+                                  addProductProviderValue.imageFileList!.toList()
+                            );
                           },
                           child: const Text('Add Product'),
                         )
@@ -244,3 +275,16 @@ class _AddProductState extends State<AddProduct> {
     );
   }
 }
+
+
+
+// final product=     Product(
+//                                 productname: addProductProviderValue.productNameTextEditingController.text,
+//                                 price: int.parse(addProductProviderValue.priceTextEditingController.text),
+//                                 mrp: int.parse(addProductProviderValue.mrpTextEditingController.text),
+//                                 stock: int.parse(addProductProviderValue.stockTextEditingController.text),
+//                                 brand: addProductProviderValue.brandTextEditingController.text,
+//                                 category: addProductProviderValue.categoryTextEditingController.text,
+//                                 description: addProductProviderValue.descriptionTextEditingController.text,
+//                                 image: addProductProviderValue.imageFileList,);
+// )

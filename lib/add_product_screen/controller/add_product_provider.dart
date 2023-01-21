@@ -23,6 +23,8 @@ class AddProductProvider with ChangeNotifier {
       if (imageFileList == null) return;
       final List<XFile> selectedImages = await imagePicker.pickMultiImage();
       if (selectedImages.isNotEmpty) {
+
+        
         imageFileList!.addAll(selectedImages);
         notifyListeners();
       }
@@ -49,6 +51,7 @@ class AddProductProvider with ChangeNotifier {
       });
       if (reponse.statusCode == 200) {
         print('Successfully added');
+        debugPrint('Successfully added'); 
       }
       notifyListeners();
     } catch (e) {

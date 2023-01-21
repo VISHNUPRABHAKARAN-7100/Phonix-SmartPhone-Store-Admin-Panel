@@ -85,7 +85,7 @@ class HomeScreen extends StatelessWidget {
         ),
         child: IconButton(
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const AddProduct(),
+            builder: (context) =>  AddProduct(),
           )),
           icon: const Icon(
             Icons.add,

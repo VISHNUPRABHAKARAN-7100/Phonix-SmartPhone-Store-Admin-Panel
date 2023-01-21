@@ -1,28 +1,26 @@
-import 'dart:io';
-
 import 'package:admin_panel_of_phonix/add_product_screen/controller/add_product_provider.dart';
+import 'package:admin_panel_of_phonix/utils/constant_colors.dart';
+import 'package:admin_panel_of_phonix/utils/constant_sized_boxs.dart';
+import 'package:admin_panel_of_phonix/widgets/custom_textform_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../model/product_model.dart';
 
 /// This screen is for adding the product.
 /// Admin can add the products.
 
-class AddProduct extends StatefulWidget {
-  const AddProduct({super.key});
+class AddProduct extends StatelessWidget {
+  AddProduct({super.key});
+  final formKeyForAddProduct = GlobalKey<FormState>();
 
-  @override
-  State<AddProduct> createState() => _AddProductState();
-}
-
-class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 248, 250, 250),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 248, 250, 250),
+        backgroundColor: backgroundColor,
         elevation: 0,
         iconTheme: const IconThemeData(),
       ),
@@ -34,176 +32,125 @@ class _AddProductState extends State<AddProduct> {
               builder: (context, addProductProviderValue, child) => Form(
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: size.height * .02,
-                    ),
+                    const ConstSizedBox(),
                     // Textformfield for the name of the product.
-                    TextFormField(
-                      controller: addProductProviderValue
+                    CustomTextFormField(
+                      textEditingController: addProductProviderValue
                           .productNameTextEditingController,
-                      decoration: InputDecoration(
-                        labelStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        labelText: 'Product Name',
-                        focusColor: Colors.black,
-                        border: const OutlineInputBorder(),
-                      ),
+                      labelText: 'Product Name',
+                      ontap: () {
+                        if (addProductProviderValue
+                            .productNameTextEditingController.text.isEmpty) {
+                          return "Product Name required";
+                        } else if (addProductProviderValue
+                                .productNameTextEditingController.text.length <
+                            5) {
+                          return "Product Name should be at least 5 characters";
+                        }
+                        return null;
+                      },
                     ),
-                    SizedBox(
-                      height: size.height * .02,
-                    ),
-                    TextFormField(
-                      controller: addProductProviderValue
+                    const ConstSizedBox(),
+
+                    CustomTextFormField(
+                      textEditingController: addProductProviderValue
                           .descriptionTextEditingController,
-                      decoration: InputDecoration(
-                        labelStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        labelText: 'Description',
-                        focusColor: Colors.black,
-                        border: const OutlineInputBorder(),
-                      ),
+                      labelText: 'Description',
+                      ontap: () {
+                        if (addProductProviderValue
+                            .descriptionTextEditingController.text.isEmpty) {
+                          return "Product description required";
+                        } else if (addProductProviderValue
+                                .descriptionTextEditingController.text.length <
+                            5) {
+                          return "Product description must be at least 5 characters";
+                        }
+                        return null;
+                      },
                     ),
-                    SizedBox(
-                      height: size.height * .02,
-                    ),
+                    const ConstSizedBox(),
                     // Textformfield for the actual price of the product.
-                    TextFormField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      controller:
+                    CustomTextFormField(
+                      textEditingController:
                           addProductProviderValue.mrpTextEditingController,
-                      decoration: InputDecoration(
-                        labelStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        labelText: 'Actual Price',
-                        focusColor: Colors.black,
-                        border: const OutlineInputBorder(),
-                      ),
+                      labelText: 'MRP price',
+                      ontap: () {
+                        if (addProductProviderValue
+                            .mrpTextEditingController.text.isEmpty) {
+                          return "MRP required";
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                     ),
-                    SizedBox(
-                      height: size.height * .02,
-                    ),
+                    const ConstSizedBox(),
                     // Textformfield for the price of the product.
-                    TextFormField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      controller:
+                    CustomTextFormField(
+                      textEditingController:
                           addProductProviderValue.priceTextEditingController,
-                      decoration: InputDecoration(
-                        labelStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        labelText: 'Discounted Price',
-                        focusColor: Colors.black,
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * .02,
-                    ),
-                    // Textformfield for the brand of the product.
-                    TextFormField(
-                      controller:
-                          addProductProviderValue.brandTextEditingController,
-                      decoration: InputDecoration(
-                        labelStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        labelText: 'Brand',
-                        focusColor: Colors.black,
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * .02,
-                    ),
-
-                    // Textformfield for category of the product.
-                    TextFormField(
-                      controller:
-                          addProductProviderValue.categoryTextEditingController,
-                      decoration: InputDecoration(
-                        labelStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        labelText: 'Category',
-                        focusColor: Colors.black,
-                        border: const OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * .02,
-                    ),
-                    // Textformfield for the remaining stock of the product.
-                    TextFormField(
+                      labelText: 'Discounted Price',
                       keyboardType: TextInputType.number,
+                      ontap: () {
+                        if (addProductProviderValue
+                            .priceTextEditingController.text.isEmpty) {
+                          return "Discounted price required";
+                        }
+                        return null;
+                      },
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                       ],
-                      controller:
+                    ),
+                    const ConstSizedBox(),
+                    // Textformfield for the brand of the product.
+                    CustomTextFormField(
+                      textEditingController:
+                          addProductProviderValue.brandTextEditingController,
+                      labelText: 'Brand',
+                      ontap: () {
+                        if (addProductProviderValue
+                            .brandTextEditingController.text.isEmpty) {
+                          return "Brand required";
+                        }
+                        return null;
+                      },
+                    ),
+                    const ConstSizedBox(),
+                    // Textformfield for category of the product.
+                    CustomTextFormField(
+                      textEditingController:
+                          addProductProviderValue.categoryTextEditingController,
+                      labelText: 'Category',
+                      ontap: () {
+                        if (addProductProviderValue
+                            .categoryTextEditingController.text.isEmpty) {
+                          return "Category required";
+                        }
+                        return null;
+                      },
+                    ),
+                    const ConstSizedBox(),
+                    // Textformfield for the remaining stock of the product.
+                    CustomTextFormField(
+                      textEditingController:
                           addProductProviderValue.stockTextEditingController,
-                      decoration: InputDecoration(
-                        labelStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
-                        labelText: 'Remaining Stock',
-                        focusColor: Colors.black,
-                        border: const OutlineInputBorder(),
-                      ),
+                      labelText: 'Remaining Stock',
+                      ontap: () {
+                        if (addProductProviderValue
+                            .stockTextEditingController.text.isEmpty) {
+                          return "Remaining Stock required";
+                        }
+                        return null;
+                      },
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      keyboardType: TextInputType.number,
                     ),
-                    SizedBox(
-                      height: size.height * .02,
-                    ),
-
+                    const ConstSizedBox(),
                     Column(
                       children: [
                         IconButton(
@@ -232,34 +179,57 @@ class _AddProductState extends State<AddProduct> {
                                   crossAxisSpacing: size.width * 0.01,
                                 ),
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Image.file(
-                                    File(addProductProviderValue
-                                        .imageFileList![index].path),
-                                    fit: BoxFit.contain,
-                                  );
-                                }),
+                                  return SizedBox();
+                                  // return Image.file(
+                                  //   File(
+                                  //     addProductProviderValue
+                                  //         .imageFileList![index].path,
+                                  //   ),
+                                  //   fit: BoxFit.contain,
+                                  // );
+                                },
+                              ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
                           ),
                           onPressed: () {
-                            addProductProviderValue.addProduct(
-                              addProductProviderValue
-                                  .productNameTextEditingController.text,
-                              addProductProviderValue
-                                  .descriptionTextEditingController.text,
-                              int.parse(addProductProviderValue
-                                  .priceTextEditingController.text),
-                              int.parse(addProductProviderValue
-                                  .mrpTextEditingController.text),
-                              addProductProviderValue
-                                  .brandTextEditingController.text,
-                              addProductProviderValue
-                                  .categoryTextEditingController.text,
-                              int.parse(addProductProviderValue
-                                  .stockTextEditingController.text),
-                                  addProductProviderValue.imageFileList!.toList()
-                            );
+                            if (formKeyForAddProduct.currentState!.validate()) {
+                              // final product = Product(
+                              //   productname: addProductProviderValue
+                              //       .productNameTextEditingController.text,
+                              //   price: int.parse(addProductProviderValue
+                              //       .priceTextEditingController.text),
+                              //   mrp: int.parse(addProductProviderValue
+                              //       .mrpTextEditingController.text),
+                              //   stock: int.parse(addProductProviderValue
+                              //       .stockTextEditingController.text),
+                              //   brand: addProductProviderValue
+                              //       .brandTextEditingController.text,
+                              //   category: addProductProviderValue
+                              //       .categoryTextEditingController.text,
+                              //   description: addProductProviderValue
+                              //       .descriptionTextEditingController.text,
+                              //   image: addProductProviderValue.imageFileList,
+                              // );
+                              addProductProviderValue.addProduct(
+                                  addProductProviderValue
+                                      .productNameTextEditingController.text,
+                                  addProductProviderValue
+                                      .descriptionTextEditingController.text,
+                                  int.parse(addProductProviderValue
+                                      .priceTextEditingController.text),
+                                  int.parse(addProductProviderValue
+                                      .mrpTextEditingController.text),
+                                  addProductProviderValue
+                                      .brandTextEditingController.text,
+                                  addProductProviderValue
+                                      .categoryTextEditingController.text,
+                                  int.parse(addProductProviderValue
+                                      .stockTextEditingController.text),
+                                  addProductProviderValue.imageFileList!
+                                      .toList());
+                            }
                           },
                           child: const Text('Add Product'),
                         )
@@ -275,16 +245,3 @@ class _AddProductState extends State<AddProduct> {
     );
   }
 }
-
-
-
-// final product=     Product(
-//                                 productname: addProductProviderValue.productNameTextEditingController.text,
-//                                 price: int.parse(addProductProviderValue.priceTextEditingController.text),
-//                                 mrp: int.parse(addProductProviderValue.mrpTextEditingController.text),
-//                                 stock: int.parse(addProductProviderValue.stockTextEditingController.text),
-//                                 brand: addProductProviderValue.brandTextEditingController.text,
-//                                 category: addProductProviderValue.categoryTextEditingController.text,
-//                                 description: addProductProviderValue.descriptionTextEditingController.text,
-//                                 image: addProductProviderValue.imageFileList,);
-// )
